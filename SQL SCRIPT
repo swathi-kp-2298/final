@@ -1,0 +1,277 @@
+-- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
+--
+-- Host: localhost    Database: insurancenew
+-- ------------------------------------------------------
+-- Server version	8.0.30
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `agentlogin`
+--
+
+DROP TABLE IF EXISTS `agentlogin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `agentlogin` (
+  `Username` varchar(50) NOT NULL,
+  `Password` varchar(50) NOT NULL,
+  PRIMARY KEY (`Username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `agentlogin`
+--
+
+LOCK TABLES `agentlogin` WRITE;
+/*!40000 ALTER TABLE `agentlogin` DISABLE KEYS */;
+INSERT INTO `agentlogin` VALUES ('Admin','Admin@123');
+/*!40000 ALTER TABLE `agentlogin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bookingdetails`
+--
+
+DROP TABLE IF EXISTS `bookingdetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `bookingdetails` (
+  `BookingId` varchar(10) NOT NULL,
+  `CustomerId` varchar(10) DEFAULT NULL,
+  `PolicyID` varchar(30) DEFAULT NULL,
+  `PayMode` varchar(10) DEFAULT NULL,
+  `BookingDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `ExpiryDate` date DEFAULT NULL,
+  `Status` enum('INACTIVE','ACTIVE','LAPSED') DEFAULT 'ACTIVE',
+  `PolicyName` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`BookingId`),
+  KEY `CustomerId` (`CustomerId`),
+  KEY `PolicyID` (`PolicyID`),
+  CONSTRAINT `bookingdetails_ibfk_1` FOREIGN KEY (`CustomerId`) REFERENCES `customerdetails` (`CustomerId`),
+  CONSTRAINT `bookingdetails_ibfk_2` FOREIGN KEY (`PolicyID`) REFERENCES `policydetails` (`PolicyId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bookingdetails`
+--
+
+LOCK TABLES `bookingdetails` WRITE;
+/*!40000 ALTER TABLE `bookingdetails` DISABLE KEYS */;
+INSERT INTO `bookingdetails` VALUES ('B001','C001','P001','QUARTERLY','2021-12-31 18:30:00','2024-01-01','LAPSED','vidyachethana'),('B002','C002','P002','HalfYearly','2021-12-31 18:30:00','2025-01-01','ACTIVE','ArogyaBhagya'),('B003','C001','P002','HalfYearly','2022-12-18 18:30:00','2025-12-19','ACTIVE','ArogyaBhagya'),('B004','C001','P003','HalfYearly','2022-12-18 18:30:00','2042-12-19','LAPSED','Jeevan Anand'),('B005','C001','P004','QUARTERLY','2022-12-18 18:30:00','2027-12-19','ACTIVE','JeenaBhagya'),('B006','C001','P005','HalfYearly','2022-12-18 18:30:00','2028-12-19','ACTIVE','VidhyaChethana'),('B007','C001','P005','HalfYearly','2022-12-18 18:30:00','2028-12-19','ACTIVE','VidhyaChethana'),('B008','C003','P002','HalfYearly','2022-12-19 18:30:00','2025-12-20','LAPSED','ArogyaBhagya'),('B009','C003','P002','HalfYearly','2022-12-19 18:30:00','2025-12-20','ACTIVE','ArogyaBhagya'),('B010','C003','P001','QUARTERLY','2022-12-19 18:30:00','2028-12-20','ACTIVE','vidyachethana'),('B011','C002','P001','QUARTERLY','2022-12-20 18:30:00','2028-12-21','LAPSED','vidyachethana'),('B012','C002','P001','QUARTERLY','2022-12-20 18:30:00','2028-12-21','ACTIVE','vidyachethana'),('B013','C002','P001','QUARTERLY','2022-12-20 18:30:00','2028-12-21','ACTIVE','vidyachethana'),('B014','C001','P009','HALFYEARLY','2022-12-20 18:30:00','2024-12-21','ACTIVE','HomeInsurance');
+/*!40000 ALTER TABLE `bookingdetails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `customerdetails`
+--
+
+DROP TABLE IF EXISTS `customerdetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `customerdetails` (
+  `CustomerId` varchar(10) NOT NULL,
+  `CustomerName` char(20) NOT NULL,
+  `CustomerDesignation` char(20) NOT NULL,
+  `CustomerEmail` char(20) NOT NULL,
+  `CustomerAddress` char(30) NOT NULL,
+  `CustomerContact` bigint NOT NULL,
+  `PassWord` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`CustomerId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customerdetails`
+--
+
+LOCK TABLES `customerdetails` WRITE;
+/*!40000 ALTER TABLE `customerdetails` DISABLE KEYS */;
+INSERT INTO `customerdetails` VALUES ('C001','SwathiKP','SDE','swati@gmail.com','bang',887643560,'Swathi@123'),('C002','Javed','Engineer','Javid@gmail.com','UP',9876543241,'Javed@123'),('C003','HariPriya','Developer','hp@gmail.com','AndhaPradhesh',7654323198,'Hari@123'),('C004','Mahi','Storage','mahi@gmail.com','Bangalore',9876543210,'Mahi@123'),('C005','Madhu','HR','madhu@gmail.com','Malur',8907654321,'madhu@123'),('C006','Krishna','SE','krishna@gmail.com','Bnaglore',9876543219,'kk@123'),('C007','Harshit','SE','Harshit@gmail.com','Banglore',8874041283,'kk1234'),('C008','Prasanna','SE','prasanna@gmail.com','bangalore',9877654332,'Prassana@123'),('C009','Harshit','SDE','Harshit@gmail.com','Banglore',2345678908,'Harshit@123'),('C010','Gayathri','SDE','gayathri@gmail.com','bangalore',9876543210,'Gayathri@123'),('C011','Madhu','asdasfds','madhu@gmail.com','malur',2134567890,'qwerty@123'),('C012','MADHU','sfdghcvjbk','siri@gmail.com','malur',1234567890,'ad'),('C013','infinite','SDE','infinite@gmail.com','banglore',2362646821,'Infinite@1213'),('C014','$567899','SDE','review@gmail','Blossom Street',9876543210,'cee'),('C015','Hari Priya','sde','harisai2457@gm','malur',987654322,'c'),('C016','asdad','asdsad','asdsdsdsd@gmail.com','asdsdsd',234567897654,'asdsdsdsdsd'),('C017','12345','asas','swati@gmail.com','xsxsx',2345678909,'sssdfhgjkjhg'),('C018','12345','asas','swati@gmail.com','xsxsx',2345678909,'sssdfhgjkjhg'),('C019','12345','asas','swati@gmail.com','xsxsx',2345678909,'sssdfhgjkjhg'),('C020','swati','HR','swati@gmail.com','dfghjksdf',2345678987,'aaaaaaaaaaaaaa'),('C021','swati','ssss','swati@gmail.com','dfghjksdf',3456789045,'dfasasagshgs'),('C022','swati','ssss','swati@gmail.com','dfghjksdf',3456789045,'dfasasagshgs'),('C023','SwathiKP','HR','swati@gmail.com','malur',23456789,'aaaaaaaaaaaaaaa'),('C025','swati','aASA','swati@gmail.com','dfghjksdf',3456789900,'AQQQQAAAAAAA'),('C026','swati','aASA','swati@gmail.com','dfghjksdf',3456789900,'AQQQQAAAAAAA'),('C027','swati','SDE','swati@gmail.com','dfghjksdf',3456789111,'qqqqqqqq'),('C028','siri','SDE','siri@gmail','malur',2345678765,'aaaaaaaaaaaaa');
+/*!40000 ALTER TABLE `customerdetails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `lapseddetails`
+--
+
+DROP TABLE IF EXISTS `lapseddetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `lapseddetails` (
+  `LapsedId` varchar(10) NOT NULL,
+  `PolicyId` varchar(10) DEFAULT NULL,
+  `LapsedStatus` varchar(10) DEFAULT NULL,
+  `RefundAmount` double DEFAULT NULL,
+  PRIMARY KEY (`LapsedId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lapseddetails`
+--
+
+LOCK TABLES `lapseddetails` WRITE;
+/*!40000 ALTER TABLE `lapseddetails` DISABLE KEYS */;
+/*!40000 ALTER TABLE `lapseddetails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `lapsedpolicies`
+--
+
+DROP TABLE IF EXISTS `lapsedpolicies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `lapsedpolicies` (
+  `laspseId` varchar(30) NOT NULL,
+  `BookingID` varchar(30) DEFAULT NULL,
+  `lapsedStatus` varchar(30) DEFAULT NULL,
+  `RefundAmount` decimal(9,2) DEFAULT NULL,
+  PRIMARY KEY (`laspseId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lapsedpolicies`
+--
+
+LOCK TABLES `lapsedpolicies` WRITE;
+/*!40000 ALTER TABLE `lapsedpolicies` DISABLE KEYS */;
+INSERT INTO `lapsedpolicies` VALUES ('L001','B003','LAPSED',100000.00),('L002','B010','LAPSED',37500.00),('L003','B010','LAPSED',37500.00),('L004','B010','LAPSED',37500.00),('L005','B011','LAPSED',35000.00),('L006','B003','LAPSED',100000.00),('L007','B010','LAPSED',37500.00),('L008','B008','LAPSED',20000.00),('L009','B001','LAPSED',19020.00),('L010','B011','LAPSED',45000.00),('L011','B005','LAPSED',25000.00),('L012','B003','LAPSED',150000.00),('L013','B005','LAPSED',25000.00),('L014','B003','LAPSED',150000.00),('L015','B029','LAPSED',37500.00),('L016','B031','LAPSED',1907.63),('L017','B018','LAPSED',50000.00),('L018','B018','LAPSED',50000.00),('L019','B018','LAPSED',50000.00),('L020','B018','LAPSED',50000.00),('L021','B018','LAPSED',50000.00),('L022','B004','LAPSED',175000.00),('L023','B008','LAPSED',35000.00),('L024','B011','LAPSED',25000.00);
+/*!40000 ALTER TABLE `lapsedpolicies` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `paymentdetails`
+--
+
+DROP TABLE IF EXISTS `paymentdetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `paymentdetails` (
+  `PaymentntId` varchar(10) NOT NULL,
+  `BookingId` varchar(10) DEFAULT NULL,
+  `CustomerId` varchar(10) DEFAULT NULL,
+  `PolicyID` varchar(30) DEFAULT NULL,
+  `AmountLeftInTerm` double DEFAULT NULL,
+  `TotalAmountToPayInEveryMode` double DEFAULT NULL,
+  `PayAmount` double DEFAULT NULL,
+  `Fine` double DEFAULT NULL,
+  `PaymentDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `NextDayPayment` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`PaymentntId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `paymentdetails`
+--
+
+LOCK TABLES `paymentdetails` WRITE;
+/*!40000 ALTER TABLE `paymentdetails` DISABLE KEYS */;
+INSERT INTO `paymentdetails` VALUES ('Q001','B001','C001','P001',434800,65200,65200,0,'2022-11-03 18:30:00','2023-02-03 18:30:00'),('Q002','B003','C001','P003',45543,250000,4333,53,'2016-08-17 18:30:00','2017-02-17 18:30:00'),('Q003','B003','C001','P003',4455,250000,4543,33,'2017-02-17 18:30:00','2017-09-17 18:30:00'),('Q004','B003','C001','P003',33555,250000,333,5,'2017-09-17 18:30:00','2018-03-17 18:30:00'),('Q005','B003','C001','P003',33344,250000,555,3,'2018-03-17 18:30:00','2018-09-17 18:30:00'),('Q006','B004','C002','P003',7333,250000,3322,0,'2020-08-17 18:30:00','2021-02-18 09:39:58'),('Q007','B004','C002','P003',0,250000,0,0,'2021-02-17 18:30:00','2021-08-17 18:30:00'),('Q008','B004','C002','P003',0,250000,0,0,'2021-08-17 18:30:00','2022-02-17 18:30:00'),('Q009','B004','C002','P003',0,250000,0,0,'2022-02-17 18:30:00','2022-08-17 18:30:00'),('Q010','B004','C002','P003',0,250000,0,0,'2022-08-17 18:30:00','2023-02-17 18:30:00'),('Q011','B011','C001','P001',0,125000,0,0,'2022-11-19 18:30:00','2023-02-19 18:30:00'),('Q012','B005','C001','P001',0,125000,0,0,'2022-11-19 18:30:00','2023-02-17 18:30:00'),('Q013','B005','C001','P001',0,125000,0,0,'2023-02-17 18:30:00','2023-05-17 18:30:00'),('Q014','B004','C002','P003',0,250000,0,0,'2023-02-17 18:30:00','2023-08-17 18:30:00'),('Q015','B001','C001','P001',0,125000,0,0,'2023-02-03 18:30:00','2023-05-03 18:30:00'),('Q016','B011','C001','P001',0,125000,0,0,'2023-02-19 18:30:00','2023-05-19 18:30:00'),('Q017','B019','C001','P001',0,125000,0,0,'2022-11-20 18:30:00','2023-02-20 18:30:00'),('Q018','B022','C008','P001',0,125000,0,0,'2022-11-28 18:30:00','2023-02-27 18:30:00'),('Q019','B023','C009','P003',0,250000,0,0,'2022-11-29 18:30:00','2023-05-29 18:30:00'),('Q020','B006','C003','P004',0,25000,0,0,'2022-11-29 18:30:00','2023-02-27 18:30:00'),('Q021','B008','C006','P005',0,100000,0,0,'2009-12-31 18:30:00','2010-06-30 18:30:00'),('Q022','B031','C001','P010',0,6358.75,0,0,'2022-12-17 18:30:00','2023-03-17 18:30:00'),('Q023','B031','C001','P010',0,6358.75,0,0,'2023-03-17 18:30:00','2023-06-17 18:30:00'),('Q024','B029','C001','P001',0,125000,0,0,'2022-12-17 18:30:00','2023-03-15 18:30:00'),('Q025','B029','C001','P001',0,125000,0,0,'2023-03-15 18:30:00','2023-06-15 18:30:00'),('Q026','B029','C001','P001',0,125000,0,0,'2023-06-15 18:30:00','2023-09-15 18:30:00'),('Q027','B031','C001','P010',0,6358.75,0,0,'2023-06-17 18:30:00','2023-09-17 18:30:00'),('Q028','B018','C001','P002',0,250000,0,0,'2022-12-18 18:30:00','2023-06-08 18:30:00'),('Q029','B018','C001','P002',0,250000,0,0,'2023-06-08 18:30:00','2023-12-08 18:30:00'),('Q030','B004','C001','P003',0,250000,0,0,'2023-08-17 18:30:00','2024-02-17 18:30:00'),('Q031','B007','C001','P005',0,100000,0,0,'2022-12-18 18:30:00','2023-06-18 18:30:00'),('Q032','B008','C003','P002',0,250000,0,0,'2010-06-30 18:30:00','2010-12-31 18:30:00');
+/*!40000 ALTER TABLE `paymentdetails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `policydetails`
+--
+
+DROP TABLE IF EXISTS `policydetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `policydetails` (
+  `PolicyId` varchar(10) NOT NULL,
+  `PolicyName` varchar(30) DEFAULT NULL,
+  `PolicyType` varchar(30) DEFAULT NULL,
+  `PremiumAmount` double DEFAULT NULL,
+  `PayMode` varchar(10) DEFAULT NULL,
+  `Term` varchar(30) DEFAULT NULL,
+  `InstallmentAmountPerPayMode` double DEFAULT NULL,
+  `MaturedAmount` double DEFAULT NULL,
+  PRIMARY KEY (`PolicyId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `policydetails`
+--
+
+LOCK TABLES `policydetails` WRITE;
+/*!40000 ALTER TABLE `policydetails` DISABLE KEYS */;
+INSERT INTO `policydetails` VALUES ('P001','vidyachethana','Education insurance',1000000,'QUARTERLY','6',125000,7800000),('P002','ArogyaBhagya','Health insurance',500000,'HalfYearly','3',16666,390000),('P003','Jeevan Anand','Pension',50000,'HalfYearly','2',12500,130000),('P004','JeenaBhagya','Personal Insurance',100000,'QUARTERLY','5',12500,650000),('P005','VidhyaChethana','HighEducation',200000,'HalfYearly','6',50000,1560000),('P006','JeevanAnand','Life',50000,'HALFYEARLY','6',12500,390000),('P009','HomeInsurance','PropertyInsurance',50000,'HALFYEARLY','2',12500,130000),('P010','hsadjsa','hsdhsgd',25435,'QUARTERLY','3',3179.375,99196.5),('P011','qqwqnw','aaaaaaa111',22222,'QUARTERLY','2',2777.75,57777.2),('P012','CarInsurance','Vehicles',30000,'HALFYEARLY','2',7500,78000),('P013','hgjk guhijokl','ghjkl',22222,'HALFYEARLY','2',5555.5,57777.2),('P014','fdxg jugk','fdytd jkgkb',22222,'HALFYEARLY','2',5555.5,57777.2),('P015','Health Insurance','dfgh',22222,'QUARTERLY','3',2777.75,86665.8),('P016','tryuhijok','ghjkl',45677,'QUARTERLY','2',5709.625,118760.2),('P017','sdfghj','jhklvbhjn',45678,'QUARTERLY','2',5709.75,118762.8);
+/*!40000 ALTER TABLE `policydetails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `policyloan`
+--
+
+DROP TABLE IF EXISTS `policyloan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `policyloan` (
+  `LoanId` varchar(10) NOT NULL,
+  `CustomerId` varchar(10) DEFAULT NULL,
+  `PolicyId` varchar(10) DEFAULT NULL,
+  `LoanAmount` double DEFAULT NULL,
+  PRIMARY KEY (`LoanId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `policyloan`
+--
+
+LOCK TABLES `policyloan` WRITE;
+/*!40000 ALTER TABLE `policyloan` DISABLE KEYS */;
+/*!40000 ALTER TABLE `policyloan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `policysurrenderdetails`
+--
+
+DROP TABLE IF EXISTS `policysurrenderdetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `policysurrenderdetails` (
+  `PolicyId` varchar(10) NOT NULL,
+  `CustomerId` varchar(10) DEFAULT NULL,
+  `SurroundedDate` date DEFAULT NULL,
+  `Amount` double DEFAULT NULL,
+  PRIMARY KEY (`PolicyId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `policysurrenderdetails`
+--
+
+LOCK TABLES `policysurrenderdetails` WRITE;
+/*!40000 ALTER TABLE `policysurrenderdetails` DISABLE KEYS */;
+/*!40000 ALTER TABLE `policysurrenderdetails` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-12-21 14:58:51
